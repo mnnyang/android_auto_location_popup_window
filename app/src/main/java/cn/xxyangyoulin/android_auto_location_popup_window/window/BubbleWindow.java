@@ -34,7 +34,7 @@ public class BubbleWindow extends AutoLocationWindow {
             case Gravity.TOP:
                 bubbleGravity = Gravity.BOTTOM;
                 offset = mParentLocation[0] + mParentWidth / 2 - mLocationX;
-
+                mLocationY-=mBubbleLayout.getBubbleHeight();
                 break;
             case Gravity.BOTTOM:
                 bubbleGravity = Gravity.TOP;
@@ -47,6 +47,7 @@ public class BubbleWindow extends AutoLocationWindow {
             case Gravity.LEFT:
                 offset = mParentLocation[1] + mParentHeight / 2 - mLocationY;
                 bubbleGravity = Gravity.RIGHT;
+                mLocationX-=mBubbleLayout.getBubbleHeight();
                 break;
             default:
                 throw new IllegalArgumentException("bubble gravity");

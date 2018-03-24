@@ -139,4 +139,13 @@ public class BubbleLayout extends FrameLayout {
         }
 
     }
+
+    public int getBubbleHeight() {
+        return bubbleHeight;
+    }
+
+    public BubbleLayout setBubbleHeight(int bubbleHeight) {
+        this.bubbleHeight = bubbleHeight;
+        return this;
+    }
 }
