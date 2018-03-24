@@ -47,7 +47,6 @@ public class BubbleLayout extends FrameLayout {
     }
 
     private void init() {
-//        setPadding(16, 16, 16, 16);
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setColor(Color.WHITE);
@@ -60,14 +59,11 @@ public class BubbleLayout extends FrameLayout {
         this.gravity = gravity;
         this.mOffset = offset;
 
-        setPadding(
-                gravity == Gravity.LEFT ? bubbleHeight : getPaddingLeft(),
+        setPadding(gravity == Gravity.LEFT ? bubbleHeight : getPaddingLeft(),
                 gravity == Gravity.TOP ? bubbleHeight : getPaddingTop(),
                 gravity == Gravity.RIGHT ? bubbleHeight : getPaddingRight(),
                 gravity == Gravity.BOTTOM ? bubbleHeight : getPaddingBottom()
         );
-
-//        setPadding(100,100,100,100);
     }
 
 

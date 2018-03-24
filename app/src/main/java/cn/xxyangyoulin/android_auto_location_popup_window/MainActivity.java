@@ -122,14 +122,7 @@ public class MainActivity extends AppCompatActivity {
                                 .show();
                         return true;
                     }
-                })
-                .setDismissEndListener(new AutoLocationWindow.DismissEndListener() {
-                    @Override
-                    public void onEnd() {
-
-                    }
-                })
-                .show(mIvAdd);
+                }).show(mIvAdd);
     }
 
     private void setAvatar() {

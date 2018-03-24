@@ -24,8 +24,6 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
 
     @Override
     protected void convert(ViewHolder holder, int position) {
-        holder.setText(R.id.tv_left, getData().get(position));
-
 
         holder.getView(R.id.tv_left).setOnClickListener(new View.OnClickListener() {
             @Override
