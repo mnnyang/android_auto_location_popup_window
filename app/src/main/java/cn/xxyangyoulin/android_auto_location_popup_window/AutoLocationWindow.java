@@ -169,13 +169,17 @@ public class AutoLocationWindow {
 
         initLocation(parent);
 
+        showPopupWindow(parent);
+
+        return this;
+    }
+
+    protected void showPopupWindow(View parent) {
         if (!mPopupWindow.isShowing()) {
             mPopupWindow.showAtLocation(parent, Gravity.TOP | Gravity.START,
                     locationX, locationY);
             showWindowShadow();
         }
-
-        return this;
     }
 
     /**
@@ -242,12 +246,12 @@ public class AutoLocationWindow {
                     break;
                 case ALIGN_TOP:
                     if (mLocation == LOCATION_LEFT || mLocation == LOCATION_RIGHT) {
-                        locationY = parentLocation[1]+mYOffset;
+                        locationY = parentLocation[1] + mYOffset;
                     }
                     break;
                 case ALIGN_BOTTOM:
                     if (mLocation == LOCATION_LEFT || mLocation == LOCATION_RIGHT) {
-                        locationY = parentLocation[1]-mPopupWindowSize[1]-mYOffset;
+                        locationY = parentLocation[1] - mPopupWindowSize[1] - mYOffset;
                     }
                     break;
                 default:

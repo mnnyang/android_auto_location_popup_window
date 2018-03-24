@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.xxyangyoulin.android_auto_location_popup_window.BubbleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/iv_top_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    android:layout_height="wrap_content">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/shadow"
         android:scrollbars="none">
 
         <LinearLayout
@@ -39,8 +32,4 @@
 
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/iv_bottom_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+</cn.xxyangyoulin.android_auto_location_popup_window.BubbleLayout>

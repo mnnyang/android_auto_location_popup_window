@@ -54,8 +54,8 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
                 AutoLocationWindow autoLocationWindow = new AutoLocationWindow()
                         .with(mActivity)
                         .layout(R.layout.popup)
-                        .align(AutoLocationWindow.ALIGN_LEFT)
-                        .location(AutoLocationWindow.LOCATION_TOP)
+                        .align(AutoLocationWindow.ALIGN_MIDDLE)
+                        .location(AutoLocationWindow.LOCATION_BOTTOM)
                         .showWindowShadow(false)
                         .show(view);
             }

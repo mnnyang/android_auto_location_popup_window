@@ -75,9 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMenu() {
         AutoLocationWindow autoLocationWindow = new AutoLocationWindow().with(this)
-                .maxHeight(200)
                 .anim(R.style.window_anim)
-                .yOffset(40)
                 .align(AutoLocationWindow.ALIGN_RIGHT)
                 .layout(R.layout.popup).show(mIvAdd);
     }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="cn.xxyangyoulin.android_qq_popup_windows.MainActivity">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/layout_toolbar"
@@ -40,9 +39,10 @@
                 android:id="@+id/iv_add"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_add_24dp" />
+                android:src="@drawable/ic_add_24dp"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </RelativeLayout>
 
