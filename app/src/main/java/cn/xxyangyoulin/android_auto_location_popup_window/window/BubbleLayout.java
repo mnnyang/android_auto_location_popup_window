@@ -1,4 +1,4 @@
-package cn.xxyangyoulin.android_auto_location_popup_window;
+package cn.xxyangyoulin.android_auto_location_popup_window.window;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -22,14 +22,14 @@ public class BubbleLayout extends FrameLayout {
     private Path mPath;
     private Path mBubblePath;
 
-    private int bubbleHeight = 20;
-    private int bubbleWidth = 40;
+    private int bubbleHeight = 30;
+    private int bubbleWidth = 58;
 
     private int gravity = Gravity.TOP;
     private int bubbleOffset;
 
-    private int radius = 12;
-    private int mMiddleOffset;
+    private int radius = 15;
+    private int mOffset = Integer.MAX_VALUE;
 
     public BubbleLayout(@NonNull Context context) {
         super(context);
@@ -47,7 +47,7 @@ public class BubbleLayout extends FrameLayout {
     }
 
     private void init() {
-        setPadding(16, 16, 16, 16);
+//        setPadding(16, 16, 16, 16);
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaint.setColor(Color.WHITE);
@@ -55,9 +55,19 @@ public class BubbleLayout extends FrameLayout {
         setWillNotDraw(false);
     }
 
+
     public void setBubble(int gravity, int offset) {
         this.gravity = gravity;
-        this.bubbleOffset = offset - radius;
+        this.mOffset = offset;
+
+        setPadding(
+                gravity == Gravity.LEFT ? bubbleHeight : getPaddingLeft(),
+                gravity == Gravity.TOP ? bubbleHeight : getPaddingTop(),
+                gravity == Gravity.RIGHT ? bubbleHeight : getPaddingRight(),
+                gravity == Gravity.BOTTOM ? bubbleHeight : getPaddingBottom()
+        );
+
+//        setPadding(100,100,100,100);
     }
 
 
@@ -69,12 +79,21 @@ public class BubbleLayout extends FrameLayout {
             int width = canvas.getWidth();
             int height = canvas.getHeight();
 
-            mMiddleOffset = (width - bubbleWidth - radius * 2) / 2;
+            initBubbleOffset(width);
             initPath(width, height);
         }
 
         canvas.drawPath(mPath, mPaint);
         canvas.drawPath(mBubblePath, mPaint);
+    }
+
+    private void initBubbleOffset(int width) {
+        if (mOffset == Integer.MAX_VALUE) {
+            //默认为中间
+            this.bubbleOffset = (width - bubbleWidth - radius * 2) / 2;
+        } else {
+            this.bubbleOffset = mOffset - radius - bubbleWidth / 2;
+        }
     }
 
     private void initPath(int width, int height) {
@@ -117,7 +136,6 @@ public class BubbleLayout extends FrameLayout {
                 break;
             default:
                 break;
-
         }
 
     }

@@ -2,24 +2,25 @@ package cn.xxyangyoulin.android_auto_location_popup_window;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-
 import cn.xxyangyoulin.android_auto_location_popup_window.util.BitmapUtils;
 import cn.xxyangyoulin.android_auto_location_popup_window.util.ScreenUtils;
+import cn.xxyangyoulin.android_auto_location_popup_window.window.AutoLocationWindow;
+import cn.xxyangyoulin.android_auto_location_popup_window.window.MenuItem;
+import cn.xxyangyoulin.android_auto_location_popup_window.window.MenuWindow;
 
 import static android.view.View.OVER_SCROLL_NEVER;
 
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mIvAvatar;
     private ImageView mIvAdd;
     private RecyclerView mRecyclerView;
+    private Toolbar mToolbar;
+    private MenuWindow mMenuWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +48,32 @@ public class MainActivity extends AppCompatActivity {
         mIvAvatar = findViewById(R.id.iv_avatar);
         mIvAdd = findViewById(R.id.iv_add);
         mRecyclerView = findViewById(R.id.recycler_view);
+        mToolbar = findViewById(R.id.toolbar);
 
         repairTransparentBug();
+        initToolbar();
         setAvatar();
         setRecyclerView();
         setMenuEvent();
     }
+
+    private void initToolbar() {
+        mToolbar.inflateMenu(R.menu.main);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(android.view.MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu:
+                        View actionView = item.getActionView();
+                        System.out.println(actionView);
+                        showMenu();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
 
     private void setRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -74,10 +97,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showMenu() {
-        AutoLocationWindow autoLocationWindow = new AutoLocationWindow().with(this)
+        mMenuWindow = new MenuWindow()
+                .with(this)
                 .anim(R.style.window_anim)
                 .align(AutoLocationWindow.ALIGN_RIGHT)
-                .layout(R.layout.popup).show(mIvAdd);
+                .addMenuItem(new MenuItem()
+                        .setTitle("创建群聊").setIconRes(R.drawable.conversation_options_multichat))
+                .addMenuItem(new MenuItem()
+                        .setTitle("加好友/群").setIconRes(R.drawable.conversation_options_addmember))
+                .addMenuItem(new MenuItem()
+                        .setTitle("扫一扫").setIconRes(R.drawable.conversation_options_qr))
+                .addMenuItem(new MenuItem()
+                        .setTitle("面对面快传").setIconRes(R.drawable.conversation_facetoface_qr))
+                .addMenuItem(new MenuItem()
+                        .setTitle("付款").setIconRes(R.drawable.conversation_options_charge_icon))
+                .addMenuItem(new MenuItem()
+                        .setTitle("拍摄").setIconRes(R.drawable.conversation_options_camera))
+                .addMenuItem(new MenuItem()
+                        .setTitle("高能舞室").setIconRes(R.drawable.conversation_options_multichat))
+                .setMenuClickListener(new MenuWindow.MenuClickListener() {
+                    @Override
+                    public boolean onClick(MenuItem item) {
+                        Toast.makeText(MainActivity.this,item.getTitle(),Toast.LENGTH_SHORT)
+                                .show();
+                        return true;
+                    }
+                })
+                .setDismissEndListener(new AutoLocationWindow.DismissEndListener() {
+                    @Override
+                    public void onEnd() {
+
+                    }
+                })
+                .show(mIvAdd);
     }
 
     private void setAvatar() {
@@ -86,36 +138,15 @@ public class MainActivity extends AppCompatActivity {
         mIvAvatar.setImageBitmap(circleImage);
     }
 
-    private void transparentStatusBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-    }
 
     private void repairTransparentBug() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             RelativeLayout layout = findViewById(R.id.layout_toolbar);
 
             ViewGroup.LayoutParams layoutParams = layout.getLayoutParams();
-            int statusBarHeight = getStatusBarHeight();
+            int statusBarHeight = ScreenUtils.getStatusBarHeight(this);
             layoutParams.height += statusBarHeight;
             layout.setLayoutParams(layoutParams);
         }
     }
-
-    private int getStatusBarHeight() {
-        int result = 0;
-        int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resId > 0) {
-            result = getResources().getDimensionPixelSize(resId);
-        }
-        return result;
-    }
-
 }

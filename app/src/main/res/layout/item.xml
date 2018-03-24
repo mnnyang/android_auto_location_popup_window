@@ -17,7 +17,8 @@
         android:background="@android:color/darker_gray"
         android:text="24sp"
         android:textColor="#fff"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/tv_middle"

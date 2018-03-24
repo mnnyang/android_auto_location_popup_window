@@ -1,5 +1,7 @@
-package cn.xxyangyoulin.android_auto_location_popup_window;
+package cn.xxyangyoulin.android_auto_location_popup_window.window;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
@@ -27,11 +29,6 @@ public class AutoLocationWindow {
     public static final int ALIGN_TOP = 9;
     public static final int ALIGN_BOTTOM = 10;
 
-    public static final int LOCATION_TOP = 4;
-    public static final int LOCATION_BOTTOM = 5;
-    public static final int LOCATION_LEFT = 6;
-    public static final int LOCATION_RIGHT = 7;
-    public static final int LOCATION_NONE = 8;
 
     protected Context mContext;
 
@@ -46,9 +43,9 @@ public class AutoLocationWindow {
     protected int mAlign = ALIGN_MIDDLE;
 
     /**
-     * 强制显示位置
+     * 显示位置
      */
-    protected int mLocation = LOCATION_NONE;
+    protected int mGravity = Gravity.NO_GRAVITY;
 
     /**
      * 显示窗口阴影
@@ -58,32 +55,36 @@ public class AutoLocationWindow {
     /**
      * 窗口阴影值
      */
-    private float windowShadowAlpha = 0.85f;
+    protected float windowShadowAlpha = 0.85f;
 
     /**
      * 内容视图
      */
-    private View mContentView;
+    protected View mContentView;
 
     /**
      * 限定窗口最大高度
      */
-    private int maxHeight;
+    protected int maxHeight;
 
     /**
      * y轴偏移
      */
-    private int mYOffset;
+    protected int mYOffset;
 
     /**
      * 显示隐藏的动画
      */
-    private int mAnimStyle;
+    protected int mAnimStyle;
 
-    private int locationX;
-    private int locationY;
+    protected int mLocationX;
+    protected int mLocationY;
 
-    private int[] mPopupWindowSize;
+    protected int[] mPopupWindowSize;
+    protected int[] mParentLocation;
+    protected int mParentWidth;
+    protected int mParentHeight;
+    protected int mScreenHeight;
 
     public AutoLocationWindow with(Activity context) {
         mContext = context;
@@ -131,7 +132,7 @@ public class AutoLocationWindow {
      * 强制显示位置
      */
     public AutoLocationWindow location(int location) {
-        this.mLocation = location;
+        this.mGravity = location;
         return this;
     }
 
@@ -174,10 +175,11 @@ public class AutoLocationWindow {
         return this;
     }
 
+
     protected void showPopupWindow(View parent) {
         if (!mPopupWindow.isShowing()) {
             mPopupWindow.showAtLocation(parent, Gravity.TOP | Gravity.START,
-                    locationX, locationY);
+                    mLocationX, mLocationY);
             showWindowShadow();
         }
     }
@@ -196,30 +198,30 @@ public class AutoLocationWindow {
      * 初始化显示位置
      */
     private void initLocation(View parent) {
-        int parentLocation[] = new int[2];
-        parent.getLocationOnScreen(parentLocation);
+        mParentLocation = new int[2];
+        parent.getLocationOnScreen(mParentLocation);
 
-        int screenHeight = ScreenUtils.getSHeight();
+        mScreenHeight = ScreenUtils.getSHeight();
 
-        int parentWidth = parent.getMeasuredWidth();
-        int parentHeight = parent.getMeasuredHeight();
+        mParentWidth = parent.getMeasuredWidth();
+        mParentHeight = parent.getMeasuredHeight();
 
-        int surplusHeight = screenHeight - parentHeight - parentLocation[1];
+        int surplusHeight = mScreenHeight - mParentHeight - mParentLocation[1];
 
         //强制指定显示位置
-        if (mLocation != LOCATION_NONE) {
-            switch (mLocation) {
-                case LOCATION_TOP:
-                    locationY = parentLocation[1] - mPopupWindowSize[1] - mYOffset;
+        if (mGravity != Gravity.NO_GRAVITY) {
+            switch (mGravity) {
+                case Gravity.TOP:
+                    mLocationY = mParentLocation[1] - mPopupWindowSize[1] - mYOffset;
                     break;
-                case LOCATION_RIGHT:
-                    locationX = parentLocation[0] + parentWidth;
+                case Gravity.RIGHT:
+                    mLocationX = mParentLocation[0] + mParentWidth;
                     break;
-                case LOCATION_BOTTOM:
-                    locationY = parentLocation[1] + parentHeight + mYOffset;
+                case Gravity.BOTTOM:
+                    mLocationY = mParentLocation[1] + mParentHeight + mYOffset;
                     break;
-                case LOCATION_LEFT:
-                    locationX = parentLocation[0] - mPopupWindowSize[0];
+                case Gravity.LEFT:
+                    mLocationX = mParentLocation[0] - mPopupWindowSize[0];
                     break;
 
                 default:
@@ -228,30 +230,30 @@ public class AutoLocationWindow {
 
             switch (mAlign) {
                 case ALIGN_MIDDLE:
-                    if (mLocation == LOCATION_TOP || mLocation == LOCATION_BOTTOM) {
-                        locationX = parentLocation[0] + parentWidth / 2 - mPopupWindowSize[0] / 2;
+                    if (mGravity == Gravity.TOP || mGravity == Gravity.BOTTOM) {
+                        mLocationX = mParentLocation[0] + mParentWidth / 2 - mPopupWindowSize[0] / 2;
                     } else {
-                        locationY = parentLocation[1] + parentHeight / 2 - mPopupWindowSize[1] / 2;
+                        mLocationY = mParentLocation[1] + mParentHeight / 2 - mPopupWindowSize[1] / 2;
                     }
                     break;
                 case ALIGN_LEFT:
-                    if (mLocation == LOCATION_TOP || mLocation == LOCATION_BOTTOM) {
-                        locationX = parentLocation[0];
+                    if (mGravity == Gravity.TOP || mGravity == Gravity.BOTTOM) {
+                        mLocationX = mParentLocation[0];
                     }
                     break;
                 case ALIGN_RIGHT:
-                    if (mLocation == LOCATION_TOP || mLocation == LOCATION_BOTTOM) {
-                        locationX = parentLocation[0] + parentWidth - mPopupWindowSize[0];
+                    if (mGravity == Gravity.TOP || mGravity == Gravity.BOTTOM) {
+                        mLocationX = mParentLocation[0] + mParentWidth - mPopupWindowSize[0];
                     }
                     break;
                 case ALIGN_TOP:
-                    if (mLocation == LOCATION_LEFT || mLocation == LOCATION_RIGHT) {
-                        locationY = parentLocation[1] + mYOffset;
+                    if (mGravity == Gravity.LEFT || mGravity == Gravity.RIGHT) {
+                        mLocationY = mParentLocation[1] + mYOffset;
                     }
                     break;
                 case ALIGN_BOTTOM:
-                    if (mLocation == LOCATION_LEFT || mLocation == LOCATION_RIGHT) {
-                        locationY = parentLocation[1] - mPopupWindowSize[1] - mYOffset;
+                    if (mGravity == Gravity.LEFT || mGravity == Gravity.RIGHT) {
+                        mLocationY = mParentLocation[1] + mParentHeight - mPopupWindowSize[1] - mYOffset;
                     }
                     break;
                 default:
@@ -263,20 +265,22 @@ public class AutoLocationWindow {
             //自动选择显示位置 todo 横屏
             if (surplusHeight > mPopupWindowSize[1]) {
                 //show in bottom
-                locationY = parentLocation[1] + parentHeight + mYOffset;
+                mLocationY = mParentLocation[1] + mParentHeight + mYOffset;
+                mGravity = Gravity.BOTTOM;
             } else {
-                locationY = parentLocation[1] - mPopupWindowSize[1] - mYOffset;
+                mLocationY = mParentLocation[1] - mPopupWindowSize[1] - mYOffset;
+                mGravity = Gravity.TOP;
             }
 
             switch (mAlign) {
                 case ALIGN_LEFT:
-                    locationX = parentLocation[0];
+                    mLocationX = mParentLocation[0];
                     break;
                 case ALIGN_RIGHT:
-                    locationX = parentLocation[0] + parentWidth - mPopupWindowSize[0];
+                    mLocationX = mParentLocation[0] + mParentWidth - mPopupWindowSize[0];
                     break;
                 case ALIGN_MIDDLE:
-                    locationX = parentLocation[0] + parentWidth / 2 - mPopupWindowSize[0] / 2;
+                    mLocationX = mParentLocation[0] + mParentWidth / 2 - mPopupWindowSize[0] / 2;
                     break;
             }
         }
@@ -327,6 +331,9 @@ public class AutoLocationWindow {
      */
     private void showWindowShadow() {
         if (!mShowWindowShadow) {
+            if (mDismissEndListener != null) {
+                mDismissEndListener.onEnd();
+            }
             return;
         }
 
@@ -361,8 +368,17 @@ public class AutoLocationWindow {
             }
         });
         animator.setDuration(300);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (mDismissEndListener != null) {
+                    mDismissEndListener.onEnd();
+                }
+            }
+        });
         animator.start();
     }
+
 
     /**
      * 设置背景透明度
@@ -387,6 +403,18 @@ public class AutoLocationWindow {
         size[0] = view.getMeasuredWidth();
         size[1] = view.getMeasuredHeight();
         return size;
+    }
+
+
+    private DismissEndListener mDismissEndListener;
+
+    public interface DismissEndListener {
+        void onEnd();
+    }
+
+    public AutoLocationWindow setDismissEndListener(DismissEndListener dismissEndListener) {
+        mDismissEndListener = dismissEndListener;
+        return this;
     }
 
     public void setEvent(View popupView) {

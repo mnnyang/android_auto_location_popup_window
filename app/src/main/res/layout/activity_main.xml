@@ -6,18 +6,51 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:id="@+id/layout_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:fitsSystemWindows="true"
+        android:layout_height="?actionBarSize"
         android:background="@drawable/bg_toolbar_gradient">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_height="?attr/actionBarSize"
+            android:gravity="center"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <LinearLayout
+                android:id="@+id/layout_week_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="消息"
+                    android:textColor="@android:color/white"
+                    android:textSize="19sp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:paddingLeft="10dp"
-            android:paddingRight="4dp">
+            android:paddingRight="6dp"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/iv_avatar"
@@ -39,15 +72,16 @@
                 android:id="@+id/iv_add"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_add_24dp"
-                android:layout_alignParentEnd="true" />
+                android:padding="6dp"
+                android:src="@drawable/ic_add_24dp" />
         </RelativeLayout>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>
