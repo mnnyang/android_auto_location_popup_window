@@ -1,4 +1,4 @@
-package cn.xxyangyoulin.android_auto_location_popup_window;
+package cn.xxyangyoulin.android_auto_location_popup_window.adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -7,6 +7,7 @@ import android.view.View;
 
 import java.util.List;
 
+import cn.xxyangyoulin.android_auto_location_popup_window.R;
 import cn.xxyangyoulin.android_auto_location_popup_window.window.AutoLocationWindow;
 import cn.xxyangyoulin.android_auto_location_popup_window.window.BubbleWindow;
 
@@ -31,7 +32,7 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
                 AutoLocationWindow autoLocationWindow = new BubbleWindow()
                         .with(mActivity)
                         .layout(R.layout.popup)
-                        .align(AutoLocationWindow.ALIGN_TOP)
+                        .align(AutoLocationWindow.ALIGN_MIDDLE)
                         .location(Gravity.RIGHT)
                         .show(view);
             }
@@ -43,7 +44,7 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
                 AutoLocationWindow autoLocationWindow = new BubbleWindow()
                         .with(mActivity)
                         .layout(R.layout.popup)
-                        .align(AutoLocationWindow.ALIGN_BOTTOM)
+                        .align(AutoLocationWindow.ALIGN_MIDDLE)
                         .location(Gravity.LEFT)
                         .show(view);
             }
@@ -56,7 +57,7 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
                         .with(mActivity)
                         .layout(R.layout.popup)
 //                        .align(AutoLocationWindow.ALIGN_MIDDLE)
-//                        .location(Gravity.BOTTOM)
+//                        .enforceLocation(Gravity.BOTTOM)
                         .show(view);
             }
         });

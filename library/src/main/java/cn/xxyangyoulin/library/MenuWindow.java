@@ -1,4 +1,4 @@
-package cn.xxyangyoulin.android_auto_location_popup_window.window;
+package cn.xxyangyoulin.library;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -8,8 +8,9 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import cn.xxyangyoulin.android_auto_location_popup_window.R;
-import cn.xxyangyoulin.android_auto_location_popup_window.adapter.RecyclerBaseAdapter;
+import cn.xxyangyoulin.library.adapter.MenuAdapter;
+import cn.xxyangyoulin.library.adapter.RecyclerBaseAdapter;
+import cn.xxyangyoulin.library.bean.MenuItem;
 
 import static android.view.View.OVER_SCROLL_NEVER;
 
@@ -33,10 +34,12 @@ public class MenuWindow extends BubbleWindow {
         return this;
     }
 
-    @Override
-    public MenuWindow with(Activity context) {
-        super.with(context);
-        return this;
+    public static MenuWindow with(Activity context) {
+        MenuWindow window = new MenuWindow();
+        window.mContext = context;
+        window.init();
+
+        return window;
     }
 
     @Override

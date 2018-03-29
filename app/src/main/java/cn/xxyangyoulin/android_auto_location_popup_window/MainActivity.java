@@ -16,16 +16,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
+import cn.xxyangyoulin.android_auto_location_popup_window.adapter.ContentAdapter;
 import cn.xxyangyoulin.android_auto_location_popup_window.util.BitmapUtils;
 import cn.xxyangyoulin.android_auto_location_popup_window.util.ScreenUtils;
-import cn.xxyangyoulin.android_auto_location_popup_window.window.AutoLocationWindow;
-import cn.xxyangyoulin.android_auto_location_popup_window.window.MenuItem;
-import cn.xxyangyoulin.android_auto_location_popup_window.window.MenuWindow;
+
+import cn.xxyangyoulin.library.AutoLocationWindow;
+import cn.xxyangyoulin.library.bean.MenuItem;
+import cn.xxyangyoulin.library.MenuWindow;
 
 import static android.view.View.OVER_SCROLL_NEVER;
 
 public class MainActivity extends AppCompatActivity {
-
 
     private ImageView mIvAvatar;
     private ImageView mIvAdd;
@@ -97,8 +99,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showMenu() {
-        mMenuWindow = new MenuWindow()
-                .with(this)
+        MenuWindow w = new MenuWindow();
+
+        mMenuWindow =MenuWindow.with(this)
                 .anim(R.style.window_anim)
                 .align(AutoLocationWindow.ALIGN_RIGHT)
                 .addMenuItem(new MenuItem()

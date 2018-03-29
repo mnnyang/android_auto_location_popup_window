@@ -1,4 +1,4 @@
-package cn.xxyangyoulin.android_auto_location_popup_window;
+package cn.xxyangyoulin.library.adapter;
 
 import android.graphics.Bitmap;
 import android.support.annotation.LayoutRes;

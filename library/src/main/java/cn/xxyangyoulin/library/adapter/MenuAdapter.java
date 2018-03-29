@@ -1,11 +1,11 @@
-package cn.xxyangyoulin.android_auto_location_popup_window.window;
+package cn.xxyangyoulin.library.adapter;
 
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import cn.xxyangyoulin.android_auto_location_popup_window.R;
-import cn.xxyangyoulin.android_auto_location_popup_window.adapter.RecyclerBaseAdapter;
+import cn.xxyangyoulin.library.R;
+import cn.xxyangyoulin.library.bean.MenuItem;
 
 /**
  * Created by xxyangyoulin on 2018/3/25.
