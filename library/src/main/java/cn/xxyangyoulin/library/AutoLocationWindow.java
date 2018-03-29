@@ -14,7 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import cn.xxyangyoulin.library.util.ScreenUtils;
+import cn.xxyangyoulin.library.util.util;
 
 
 /**
@@ -98,7 +98,7 @@ public class AutoLocationWindow {
     }
 
     protected void init() {
-        maxHeight = ScreenUtils.getSHeight(mContext);
+        maxHeight = util.getSHeight(mContext);
     }
 
     /**
@@ -206,7 +206,7 @@ public class AutoLocationWindow {
         mParentLocation = new int[2];
         parent.getLocationOnScreen(mParentLocation);
 
-        mScreenHeight = ScreenUtils.getSHeight(mContext);
+        mScreenHeight = util.getSHeight(mContext);
 
         mParentWidth = parent.getMeasuredWidth();
         mParentHeight = parent.getMeasuredHeight();

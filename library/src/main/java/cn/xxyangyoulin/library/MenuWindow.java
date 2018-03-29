@@ -24,6 +24,7 @@ public class MenuWindow extends BubbleWindow {
     private MenuAdapter mAdapter;
 
     private MenuClickListener mMenuClickListener;
+    private boolean mIsBubble = true;
 
     public interface MenuClickListener {
         boolean onClick(MenuItem item);
@@ -54,6 +55,11 @@ public class MenuWindow extends BubbleWindow {
         return this;
     }
 
+    public MenuWindow isBubble(boolean isBubble) {
+        this.mIsBubble = isBubble;
+        return this;
+    }
+
     @Override
     public MenuWindow show(View parent) {
         RecyclerView view = (RecyclerView) View.inflate(mContext, R.layout.popup_menu, null);
@@ -64,6 +70,20 @@ public class MenuWindow extends BubbleWindow {
 
         super.show(parent);
         return this;
+    }
+
+    @Override
+    protected View createBubble(View view) {
+        if (mIsBubble) {
+            return super.createBubble(view);
+        } else {
+            return view;
+        }
+    }
+
+    @Override
+    protected void initBubbleLocation() {
+        if (mIsBubble) super.initBubbleLocation();
     }
 
     @Override

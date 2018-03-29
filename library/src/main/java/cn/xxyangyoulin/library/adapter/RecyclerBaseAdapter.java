@@ -158,6 +158,7 @@ public abstract class RecyclerBaseAdapter<T> extends RecyclerView.Adapter<Recycl
                 mViews = new SparseArray<View>();
         }
 
+        @SuppressWarnings("unchecked")
         public <V extends View> V getView(int viewId) {
             View view = mViews.get(viewId);
             if (view == null) {

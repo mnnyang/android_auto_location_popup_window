@@ -16,29 +16,26 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-
 import cn.xxyangyoulin.android_auto_location_popup_window.adapter.ContentAdapter;
 import cn.xxyangyoulin.android_auto_location_popup_window.util.BitmapUtils;
 import cn.xxyangyoulin.android_auto_location_popup_window.util.ScreenUtils;
-
 import cn.xxyangyoulin.library.AutoLocationWindow;
-import cn.xxyangyoulin.library.bean.MenuItem;
 import cn.xxyangyoulin.library.MenuWindow;
+import cn.xxyangyoulin.library.bean.MenuItem;
 
 import static android.view.View.OVER_SCROLL_NEVER;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageView mIvAvatar;
-    private ImageView mIvAdd;
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
+    private ImageView mIvMenu;
     private MenuWindow mMenuWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        transparentStatusBar();
         ScreenUtils.setSystemBarTransparent(this);
         setContentView(R.layout.activity_main);
 
@@ -48,60 +45,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         mIvAvatar = findViewById(R.id.iv_avatar);
-        mIvAdd = findViewById(R.id.iv_add);
+        mIvMenu = findViewById(R.id.iv_menu);
         mRecyclerView = findViewById(R.id.recycler_view);
         mToolbar = findViewById(R.id.toolbar);
 
         repairTransparentBug();
-        initToolbar();
+
         setAvatar();
         setRecyclerView();
         setMenuEvent();
     }
 
-    private void initToolbar() {
-        mToolbar.inflateMenu(R.menu.main);
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(android.view.MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu:
-                        View actionView = item.getActionView();
-                        System.out.println(actionView);
-                        showMenu();
-                        return true;
-                }
-                return false;
-            }
-        });
-    }
-
-
-    private void setRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        ArrayList<String> strings = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            strings.add("content" + i);
-        }
-
-        ContentAdapter adapter = new ContentAdapter(R.layout.item, strings, this);
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setOverScrollMode(OVER_SCROLL_NEVER);
-    }
-
-    private void setMenuEvent() {
-        mIvAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showMenu();
-            }
-        });
-    }
-
     private void showMenu() {
-        MenuWindow w = new MenuWindow();
-
-        mMenuWindow =MenuWindow.with(this)
+        if (mMenuWindow!=null){
+            mMenuWindow.show(mIvMenu);
+            return;
+        }
+        mMenuWindow = MenuWindow.with(this)
+                .isBubble(true)
                 .anim(R.style.window_anim)
                 .align(AutoLocationWindow.ALIGN_RIGHT)
                 .addMenuItem(new MenuItem()
@@ -121,12 +82,34 @@ public class MainActivity extends AppCompatActivity {
                 .setMenuClickListener(new MenuWindow.MenuClickListener() {
                     @Override
                     public boolean onClick(MenuItem item) {
-                        Toast.makeText(MainActivity.this,item.getTitle(),Toast.LENGTH_SHORT)
+                        Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT)
                                 .show();
                         return true;
                     }
-                }).show(mIvAdd);
+                }).show(mIvMenu);
     }
+
+    private void setRecyclerView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        ArrayList<String> strings = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            strings.add("content" + i);
+        }
+
+        ContentAdapter adapter = new ContentAdapter(R.layout.item, strings, this);
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setOverScrollMode(OVER_SCROLL_NEVER);
+    }
+
+    private void setMenuEvent() {
+        mIvMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMenu();
+            }
+        });
+    }
+
 
     private void setAvatar() {
         Bitmap circleImage = BitmapUtils.createCircleImage(

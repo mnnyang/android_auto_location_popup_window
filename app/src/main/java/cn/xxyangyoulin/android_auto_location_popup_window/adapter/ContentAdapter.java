@@ -8,8 +8,9 @@ import android.view.View;
 import java.util.List;
 
 import cn.xxyangyoulin.android_auto_location_popup_window.R;
-import cn.xxyangyoulin.android_auto_location_popup_window.window.AutoLocationWindow;
-import cn.xxyangyoulin.android_auto_location_popup_window.window.BubbleWindow;
+import cn.xxyangyoulin.library.AutoLocationWindow;
+import cn.xxyangyoulin.library.BubbleWindow;
+import cn.xxyangyoulin.library.adapter.RecyclerBaseAdapter;
 
 /**
  * Created by xxyangyoulin on 2018/3/24.
@@ -29,11 +30,10 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
         holder.getView(R.id.tv_left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AutoLocationWindow autoLocationWindow = new BubbleWindow()
-                        .with(mActivity)
+                AutoLocationWindow autoLocationWindow = BubbleWindow.with(mActivity)
                         .layout(R.layout.popup)
                         .align(AutoLocationWindow.ALIGN_MIDDLE)
-                        .location(Gravity.RIGHT)
+                        .enforceLocation(Gravity.RIGHT)
                         .show(view);
             }
         });
@@ -41,11 +41,10 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
         holder.getView(R.id.tv_right).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AutoLocationWindow autoLocationWindow = new BubbleWindow()
-                        .with(mActivity)
+                AutoLocationWindow autoLocationWindow = BubbleWindow.with(mActivity)
                         .layout(R.layout.popup)
                         .align(AutoLocationWindow.ALIGN_MIDDLE)
-                        .location(Gravity.LEFT)
+                        .enforceLocation(Gravity.LEFT)
                         .show(view);
             }
         });
@@ -53,8 +52,7 @@ public class ContentAdapter extends RecyclerBaseAdapter<String> {
         holder.getView(R.id.tv_middle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AutoLocationWindow autoLocationWindow = new BubbleWindow()
-                        .with(mActivity)
+                AutoLocationWindow autoLocationWindow = BubbleWindow.with(mActivity)
                         .layout(R.layout.popup)
 //                        .align(AutoLocationWindow.ALIGN_MIDDLE)
 //                        .enforceLocation(Gravity.BOTTOM)

@@ -20,6 +20,10 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    dexOptions {
+        preDexLibraries = false
+    }
 }
 
 dependencies {
@@ -30,6 +34,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:recyclerview-v7:27.1.0'
-    compile 'com.xxyangyoulin:AutoLocateWindow:0.0.1'
     implementation project(':library')
+//    implementation 'com.xxyangyoulin:AutoLocateWindow:0.0.1'
+//    implementation 'cn.xxyangyoulin:AutoLocateWindow:0.0.2@aar'
+
 }

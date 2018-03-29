@@ -26,6 +26,14 @@ android {
         abortOnError false
     }
 
+    dexOptions {
+        preDexLibraries = false
+    }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked"
+    }
+
 }
 
 dependencies {
@@ -40,6 +48,10 @@ dependencies {
 
 }
 
+configurations {
+    all*.exclude group: 'com.android.support', module: 'support-v4'
+}
+
 apply plugin: 'com.novoda.bintray-release'
 
 
@@ -47,10 +59,10 @@ def siteUrl = 'https://github.com/mnnyang/android_auto_location_popup_window'
 publish{
     userOrg = 'xxyangll'
     repoName = 'maven'
-    groupId = 'com.xxyangyoulin'
+    groupId = 'cn.xxyangyoulin'
 
     artifactId = 'AutoLocateWindow'//项目名称
-    publishVersion = '0.0.1'
+    publishVersion = '0.0.2'
 //    desc = ''//描述，不重要
     website = siteUrl//项目主页
 }

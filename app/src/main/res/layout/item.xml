@@ -14,9 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:background="@android:color/darker_gray"
         android:text="24sp"
-        android:textColor="#fff"
         android:textSize="24sp"
         android:layout_alignParentLeft="true" />
 
@@ -25,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@android:color/holo_orange_light"
         android:text="24sp"
         android:textSize="24sp" />
 
@@ -35,8 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:background="@android:color/holo_blue_light"
         android:text="24sp"
-        android:textColor="#fff"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_alignParentRight="true" />
 </RelativeLayout>

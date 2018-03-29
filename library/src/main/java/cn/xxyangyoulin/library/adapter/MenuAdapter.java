@@ -18,7 +18,7 @@ public class MenuAdapter extends RecyclerBaseAdapter<MenuItem> {
     }
 
     @Override
-    protected void convert(ViewHolder holder, int position) {
+    protected void convert(RecyclerBaseAdapter.ViewHolder holder, int position) {
         holder.setText(R.id.tv_title,getData().get(position).getTitle());
         holder.setImageResource(R.id.iv_icon,getData().get(position).getIconId());
     }

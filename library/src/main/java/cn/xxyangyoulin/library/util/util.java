@@ -8,7 +8,7 @@ import android.view.WindowManager;
  * Created by xxyangyoulin on 2018/3/29.
  */
 
-public class ScreenUtils {
+public class util {
     public static int getSHeight(Context context) {
         DisplayMetrics metrics = new DisplayMetrics();
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
