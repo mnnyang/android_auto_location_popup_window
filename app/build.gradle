@@ -36,5 +36,5 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.0'
     implementation project(':library')
 
-//    compile 'com.github.mnnyang:android_auto_location_popup_window:0.1.0'
+//    compile 'com.github.mnnyang:android_auto_location_popup_window:0.2.0'
 }
