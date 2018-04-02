@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
@@ -15,17 +16,15 @@
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:src="@drawable/conversation_options_charge_icon" />
+        android:layout_height="26dp" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="创建群聊"
+        tools:text="创建群聊"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
-
 
 </LinearLayout>

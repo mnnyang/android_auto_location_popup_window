@@ -35,7 +35,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:recyclerview-v7:27.1.0'
     implementation project(':library')
-//    implementation 'com.xxyangyoulin:AutoLocateWindow:0.0.1'
-//    implementation 'cn.xxyangyoulin:AutoLocateWindow:0.0.2@aar'
 
+//    compile 'com.github.mnnyang:android_auto_location_popup_window:0.1.0'
 }
